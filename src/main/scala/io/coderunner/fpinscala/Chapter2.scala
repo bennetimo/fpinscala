@@ -1,6 +1,7 @@
 package io.coderunner.fpinscala
 
 import scala.annotation.tailrec
+import scala.reflect.ClassTag
 
 trait Chapter2 {
 
@@ -47,6 +48,36 @@ trait Chapter2 {
         case x => loop(n-1, next, prev+next)
       }
       loop(n, 0, 1)
+    }
+
+  }
+
+  object ex2p2 extends Example {
+
+    val name = "Ex2.2 Implement isSorted, which checks whether an Array[A] is sorted according to a given comparison function"
+
+    @tailrec
+    def isSorted[A](as: Array[A], ordered: (A,A) => Boolean): Boolean = {
+      as.length match {
+        case 0 => true
+        case 1 => true
+        case 2 => ordered(as(0), as(1))
+        case _ => ordered(as(0), as(1)) && isSorted(as.tail, ordered)
+      }
+    }
+
+    def isSorted2[A: ClassTag](as: Array[A], ordered: (A,A) => Boolean) : Boolean = {
+      as.zip(if (as.isEmpty) Array.empty[A] else as.tail).forall(a => ordered(a._1, a._2))
+    }
+
+    def isSorted3[A](as: Array[A], ordered: (A,A) => Boolean): Boolean = {
+      @tailrec
+      def loop(n: Int): Boolean = {
+        if(n >= as.length - 1) true //We've got all the way to the end of the array without a problem, so it must be sorted
+        else if(!ordered(as(n), as(n+1))) false
+        else loop(n+1)
+      }
+      loop(0)
     }
 
   }
