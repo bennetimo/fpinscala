@@ -62,7 +62,7 @@ class Chapter3Spec extends UnitTest with Chapter3 {
 
   behavior of s"${ex3p5.name}"
   it should "keep dropping until predicate match" in {
-    ex3p5.dropWhile(List(1, 2, -1, 3), (x: Int) => x > 0) should be(Cons(-1, Cons(3, Nil)))
+    ex3p5.dropWhile(List(1, 2, -1, 3))(x => x > 0) should be(Cons(-1, Cons(3, Nil)))
   }
 
   behavior of s"${ex3p6.name}"
