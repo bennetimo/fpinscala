@@ -56,6 +56,17 @@ class Chapter2Spec extends UnitTest with Chapter2 with Chapter2Behaviours {
     uncurried("hello", 5) should be(f("hello")(5))
   }
 
+  behavior of s"${ex2p5.name}"
+
+  it should "return a new function that composes the two passed in functions" in {
+    val f1: Int => Int = i => i+10
+    val f2: Int => Int = i => i*2
+
+    forAll(posNum[Int]){ n =>
+      ex2p5.compose(f1, f2)(n) should be((n*2)+10)
+    }
+  }
+
 }
 
 trait Chapter2Behaviours { this: UnitTest =>
