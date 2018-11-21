@@ -82,4 +82,12 @@ trait Chapter2 {
 
   }
 
+  object ex2p3 extends Example {
+    val name = "Ex2.3 Implement curry, which converts a function f of two arguments into a function of one argument that partially applies f"
+
+    def curry[A, B, C](f: (A, B) => C): A => (B => C) = {
+      (a: A) => (b: B) => f(a, b)
+    }
+  }
+
 }

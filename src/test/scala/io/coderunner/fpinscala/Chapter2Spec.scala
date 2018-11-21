@@ -39,6 +39,14 @@ class Chapter2Spec extends UnitTest with Chapter2 with Chapter2Behaviours {
   s"${ex2p2.name} (Attempt #3 (recursive simpler): isSorted3[Int])" should behave like isSortedChecks[Int](ex2p2.isSorted3)
   s"${ex2p2.name} (Attempt #3 (recursive simpler): isSorted3[String])" should behave like isSortedChecks[String](ex2p2.isSorted3)
 
+  behavior of s"${ex2p3.name}"
+
+  it should "return a new function that partially aplies the first argument" in {
+    val f: (String, Int) => String = (s: String, i: Int) => s"$s-$i"
+    val curried = ex2p3.curry(f)
+    curried("hello")(5) should be(f("hello", 5))
+  }
+
 }
 
 trait Chapter2Behaviours { this: UnitTest =>
