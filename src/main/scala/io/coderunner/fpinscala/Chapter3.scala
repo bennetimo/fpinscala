@@ -2,25 +2,25 @@ package io.coderunner.fpinscala
 
 trait Chapter3 {
 
-  object ex3p1 extends Example {
-
-    val name = "Ex3.1 What will be the result of the following match expression?"
-
-    sealed trait List[+A]
-    case object Nil extends List[Nothing]
-    object List {
-      def sum(ints: List[Int]): Int = ints match {
-        case Nil => 0
-        case Cons(x, xs) => x + sum(xs)
-      }
-
-      def apply[A](as: A*): List[A] = {
-        if (as.isEmpty) Nil
-        else Cons(as.head, apply(as.tail: _*))
-      }
+  sealed trait List[+A]
+  case object Nil extends List[Nothing]
+  object List {
+    def sum(ints: List[Int]): Int = ints match {
+      case Nil => 0
+      case Cons(x, xs) => x + sum(xs)
     }
 
-    case class Cons[+A](head: A, tail: List[A]) extends List[A]
+    def apply[A](as: A*): List[A] = {
+      if (as.isEmpty) Nil
+      else Cons(as.head, apply(as.tail: _*))
+    }
+  }
+
+  case class Cons[+A](head: A, tail: List[A]) extends List[A]
+
+  object ex3p1 extends Example {
+
+    val name = "Ex3.1 - What will be the result of the following match expression?"
 
     def m: Any = List(1, 2, 3, 4, 5) match {
       case Cons(x, Cons(2, Cons(4, _))) => x
@@ -30,4 +30,16 @@ trait Chapter3 {
       case _ => 101
     }
   }
+
+  object ex3p2 extends Example {
+
+    val name = "Ex3.2 - Implement the function tail for removing the first element of a List"
+
+    def tail[A](l: List[A]): List[A] = l match {
+      case Nil => Nil
+      case Cons(h, t) => t
+    }
+
+  }
+
 }

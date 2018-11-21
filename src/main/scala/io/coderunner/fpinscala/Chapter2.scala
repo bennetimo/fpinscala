@@ -7,7 +7,7 @@ trait Chapter2 {
 
   object ex2p1 extends Example {
 
-    val name = "Ex2.1 Write a tail recursive function to get the nth fibonacci number"
+    val name = "Ex2.1 - Write a tail recursive function to get the nth fibonacci number"
 
     def fib(n: Int): Int = {
       @tailrec
@@ -54,7 +54,7 @@ trait Chapter2 {
 
   object ex2p2 extends Example {
 
-    val name = "Ex2.2 Implement isSorted, which checks whether an Array[A] is sorted according to a given comparison function"
+    val name = "Ex2.2 - Implement isSorted, which checks whether an Array[A] is sorted according to a given comparison function"
 
     @tailrec
     def isSorted[A](as: Array[A], ordered: (A,A) => Boolean): Boolean = {
@@ -83,7 +83,7 @@ trait Chapter2 {
   }
 
   object ex2p3 extends Example {
-    val name = "Ex2.3 Implement curry, which converts a function f of two arguments into a function of one argument that partially applies f"
+    val name = "Ex2.3 - Implement curry, which converts a function f of two arguments into a function of one argument that partially applies f"
 
     def curry[A, B, C](f: (A, B) => C): A => (B => C) = {
       (a: A) => (b: B) => f(a, b)
@@ -91,7 +91,7 @@ trait Chapter2 {
   }
 
   object ex2p4 extends Example {
-    val name = "Ex2.4 Implement uncurry, which reverses the transformation of curry"
+    val name = "Ex2.4 - Implement uncurry, which reverses the transformation of curry"
 
     def uncurry[A, B, C](f: A => B => C): (A, B) => C = {
       (a: A, b: B) => f(a)(b)
@@ -99,7 +99,7 @@ trait Chapter2 {
   }
 
   object ex2p5 extends Example {
-    val name = "Ex2.5 Implement the HOF that composes two functions"
+    val name = "Ex2.5 - Implement the HOF that composes two functions"
 
     def compose[A, B, C](f: B => C, g: A => B): A => C = {
       (a: A) => f(g(a))
