@@ -90,4 +90,12 @@ trait Chapter2 {
     }
   }
 
+  object ex2p4 extends Example {
+    val name = "Ex2.3 Implement uncurry, which reverses the transformation of curry"
+
+    def uncurry[A, B, C](f: A => B => C): (A, B) => C = {
+      (a: A, b: B) => f(a)(b)
+    }
+  }
+
 }

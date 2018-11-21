@@ -41,10 +41,19 @@ class Chapter2Spec extends UnitTest with Chapter2 with Chapter2Behaviours {
 
   behavior of s"${ex2p3.name}"
 
-  it should "return a new function that partially aplies the first argument" in {
+  it should "return a new function that partially applies the first argument" in {
     val f: (String, Int) => String = (s: String, i: Int) => s"$s-$i"
     val curried = ex2p3.curry(f)
     curried("hello")(5) should be(f("hello", 5))
+  }
+
+  behavior of s"${ex2p4.name}"
+
+  it should "return a new function that uncurries the arguments" in {
+    val f: String => Int => String = (s: String) => (i: Int) => s"$s-$i"
+
+    val uncurried = ex2p4.uncurry(f)
+    uncurried("hello", 5) should be(f("hello")(5))
   }
 
 }
