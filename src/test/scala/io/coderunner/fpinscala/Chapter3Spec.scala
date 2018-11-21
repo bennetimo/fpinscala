@@ -35,15 +35,15 @@ class Chapter3Spec extends UnitTest with Chapter3 {
   }
 
   behavior of s"${ex3p3.name}"
-  it should "return Cons(new, Nil) if the original list is Nil" in {
+  it should "return throw an error if the original list is Nil" in {
     forAll((n: Int) => {
-      ex3p3.setHead(n, Nil) should be(Cons(n, Nil))
+      an [RuntimeException] should be thrownBy ex3p3.setHead(n, Nil)
     })
   }
 
-  it should "return Cons(new, Cons(h, t)) if the original list is not Nil" in {
+  it should "return Cons(new, t)) if the original list is not Nil" in {
     forAll((n: Int, n2: Int, n3: Int) => {
-      ex3p3.setHead(n, List(n2, n3)) should be(Cons(n, Cons(n2, Cons(n3, Nil))))
+      ex3p3.setHead(n, List(n2, n3)) should be(Cons(n, Cons(n3, Nil)))
     })
   }
 
@@ -58,6 +58,11 @@ class Chapter3Spec extends UnitTest with Chapter3 {
 
   it should "return Nil if n >= list.length" in {
     ex3p4.drop(3, List(1,2,3)) should be(Nil)
+  }
+
+  behavior of s"${ex3p5.name}"
+  it should "keep dropping until predicate match" in {
+    ex3p5.dropWhile(List(1, 2, -1, 3), (x: Int) => x > 0) should be(Cons(-1, Cons(3, Nil)))
   }
 
 }

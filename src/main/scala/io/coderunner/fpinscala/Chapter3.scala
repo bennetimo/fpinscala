@@ -1,5 +1,7 @@
 package io.coderunner.fpinscala
 
+import scala.annotation.tailrec
+
 trait Chapter3 {
 
   sealed trait List[+A]
@@ -37,7 +39,7 @@ trait Chapter3 {
 
     def tail[A](l: List[A]): List[A] = l match {
       case Nil => Nil
-      case Cons(h, t) => t
+      case Cons(_, t) => t
     }
   }
 
@@ -46,8 +48,8 @@ trait Chapter3 {
     val name = "Ex3.3 - Implement setHead for replacing the first element of a List with a different value"
 
     def setHead[A](newHead: A, l: List[A]): List[A] = l match {
-      case Nil => Cons(newHead, Nil)
-      case Cons(h, t) => Cons(newHead, Cons(h, t))
+      case Nil => sys.error("setHead on empty List")
+      case Cons(_, t) => Cons(newHead, t)
     }
   }
 
@@ -58,6 +60,17 @@ trait Chapter3 {
     def drop[A](n: Int, l: List[A]): List[A] = {
       if (n <= 0) l
       else drop(n-1, ex3p2.tail(l))
+    }
+  }
+
+  object ex3p5 extends Example {
+
+    val name = "Ex3.5 - Implement dropWhile, which removes elements from the List prefix as long as they match a predicate"
+
+    @tailrec
+    def dropWhile[A](l: List[A], f: (A => Boolean)): List[A] = l match {
+      case Nil => Nil
+      case Cons(h, t) => if(f(h)) dropWhile(t, f) else l
     }
   }
 
