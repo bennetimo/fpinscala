@@ -34,4 +34,17 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     }
   }
 
+  behavior of s"${ex3p3.name}"
+  it should "return Cons(new, Nil) if the original list is Nil" in {
+    forAll((n: Int) => {
+      ex3p3.setHead(n, Nil) should be(Cons(n, Nil))
+    })
+  }
+
+  it should "return Cons(new, Cons(h, t)) if the original list is not Nil" in {
+    forAll((n: Int, n2: Int, n3: Int) => {
+      ex3p3.setHead(n, List(n2, n3)) should be(Cons(n, Cons(n2, Cons(n3, Nil))))
+    })
+  }
+
 }

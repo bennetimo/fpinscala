@@ -39,7 +39,16 @@ trait Chapter3 {
       case Nil => Nil
       case Cons(h, t) => t
     }
+  }
 
+  object ex3p3 extends Example {
+
+    val name = "Ex3.3 - Implement setHead for replacing the first element of a List with a different value"
+
+    def setHead[A](newHead: A, l: List[A]): List[A] = l match {
+      case Nil => Cons(newHead, Nil)
+      case Cons(h, t) => Cons(newHead, Cons(h, t))
+    }
   }
 
 }
