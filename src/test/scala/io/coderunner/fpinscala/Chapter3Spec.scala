@@ -65,4 +65,12 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p5.dropWhile(List(1, 2, -1, 3), (x: Int) => x > 0) should be(Cons(-1, Cons(3, Nil)))
   }
 
+  behavior of s"${ex3p6.name}"
+  it should "return Nil for a list of one element" in {
+    ex3p6.init(List(1)) should be(Nil)
+  }
+  it should "chop of the last element in the List" in {
+    ex3p6.init(List(1, 2, 3, 4)) should be(List(1,2,3))
+  }
+
 }

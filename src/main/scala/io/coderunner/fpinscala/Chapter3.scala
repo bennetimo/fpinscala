@@ -74,4 +74,15 @@ trait Chapter3 {
     }
   }
 
+  object ex3p6 extends Example {
+
+    val name = "Ex3.6 - Implement init that returns a List consisting of all but the last element of a List"
+
+    def init[A](l: List[A]): List[A] = l match {
+      case Nil => Nil
+      case Cons(_, Nil) => Nil
+      case Cons(h, t) => Cons(h, init(t))
+    }
+  }
+
 }
