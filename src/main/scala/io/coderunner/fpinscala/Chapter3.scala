@@ -51,4 +51,14 @@ trait Chapter3 {
     }
   }
 
+  object ex3p4 extends Example {
+
+    val name = "Ex3.4 - Generalise tail to the function drop, which removes the first n elements from a List"
+
+    def drop[A](n: Int, l: List[A]): List[A] = {
+      if (n <= 0) l
+      else drop(n-1, ex3p2.tail(l))
+    }
+  }
+
 }

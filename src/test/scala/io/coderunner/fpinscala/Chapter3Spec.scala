@@ -47,4 +47,17 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     })
   }
 
+  behavior of s"${ex3p4.name}"
+  it should "return the tail if n is 1" in {
+    ex3p4.drop(1, List(1,2,3)) should be(Cons(2, Cons(3, Nil)))
+  }
+
+  it should "return the tail tail if n is 2" in {
+    ex3p4.drop(2, List(1,2,3)) should be(Cons(3, Nil))
+  }
+
+  it should "return Nil if n >= list.length" in {
+    ex3p4.drop(3, List(1,2,3)) should be(Nil)
+  }
+
 }
