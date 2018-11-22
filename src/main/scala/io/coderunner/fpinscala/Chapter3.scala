@@ -241,4 +241,25 @@ trait Chapter3 {
     }
   }
 
+  object ex3p18 extends Example {
+
+    val name = "Ex3.18 - Write a function map that generalises modifying each element in a list while maintaining the structure of the list"
+
+    def map[A, B](ls: List[A])(f: A => B): List[B] = {
+      ex3p7.foldRight(ls, Nil: List[B])( (elem, acc) => Cons(f(elem), acc))
+    }
+
+    def mapStackSafe[A, B](ls: List[A])(f: A => B): List[B] = {
+      val buf = new collection.mutable.ListBuffer[B]
+      @tailrec
+      def go(l: List[A]): Unit = l match {
+        case Nil => ()
+        case Cons(h, t) => buf.append(f(h)) ; go(t)
+      }
+
+      go(ls)
+      List(buf.toList :_*)
+    }
+  }
+
 }

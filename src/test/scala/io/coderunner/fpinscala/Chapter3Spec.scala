@@ -161,4 +161,12 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p17.stringify(List(1.0, 2.0, 3.0)) should be(List("1.0", "2.0", "3.0"))
   }
 
+  behavior of s"${ex3p18.name}"
+  it should "be able to map all elements + 2" in {
+    ex3p18.map(List(1, 2, 3))(_ + 2) should be(List(3, 4, 5))
+  }
+  it should "be able to map all elements + 2 in a stack safe way" in {
+    ex3p18.mapStackSafe(List(1, 2, 3))(_ + 2) should be(List(3, 4, 5))
+  }
+
 }
