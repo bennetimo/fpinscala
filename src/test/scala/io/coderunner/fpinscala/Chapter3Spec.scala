@@ -169,4 +169,9 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p18.mapStackSafe(List(1, 2, 3))(_ + 2) should be(List(3, 4, 5))
   }
 
+  behavior of s"${ex3p19.name}"
+  it should "filter all odd numbers from a list" in {
+    ex3p19.filter(List(1, 2, 3, 4, 5))(_ % 2 == 0) should be(List(2, 4))
+  }
+
 }

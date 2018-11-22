@@ -262,4 +262,13 @@ trait Chapter3 {
     }
   }
 
+  object ex3p19 extends Example {
+
+    val name = "Ex3.19 - Write a function filter that removes elements from a list unless they satisfy a given predicate"
+
+    def filter[A](as: List[A])(f: A => Boolean): List[A] = {
+      ex3p7.foldRight(as, Nil: List[A])( (a, acc) => if(f(a)) Cons(a, acc) else acc)
+    }
+  }
+
 }
