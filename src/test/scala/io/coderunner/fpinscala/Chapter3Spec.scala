@@ -102,4 +102,16 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     }
   }
 
+  behavior of s"${ex3p10.name}"
+  it should "throw a StackOverflowError for large lists using foldRight" in {
+    val scalaList = (1 to 10000).toList
+    val ourList = List.applyIterative(scalaList :_*)
+    an [StackOverflowError] should be thrownBy ex3p7.foldRight(ourList, "")((x, y) => "X" + x)
+  }
+  it should "not throw a StackOverflowError for large lists using foldLeft" in {
+    val scalaList = (10001 to 35000).toList
+    val ourList = List.applyIterative(scalaList :_*)
+    noException should be thrownBy ex3p10.foldLeft(ourList, "")((x, y) => "X" + x)
+  }
+
 }

@@ -16,6 +16,21 @@ trait Chapter3 {
       if (as.isEmpty) Nil
       else Cons(as.head, apply(as.tail: _*))
     }
+
+    // Won't throw a StackOverflowError when applying a large number of varargs
+    def applyIterative[A](as: A*): List[A] = {
+      if (as.isEmpty) Nil
+      else {
+        var l: List[A] = Nil
+        var i = 0
+        val reverse = as.reverse
+        while(i < reverse.length){
+          l = Cons(as(i), l)
+          i = i + 1
+        }
+        l
+      }
+    }
   }
 
   case class Cons[+A](head: A, tail: List[A]) extends List[A]
@@ -119,6 +134,20 @@ trait Chapter3 {
 
     def length[A](as: List[A]): Int = {
       ex3p7.foldRight(as, 0)((_, count) => count + 1)
+    }
+
+  }
+
+  object ex3p10 extends Example {
+
+    val name = "Ex3.10 - Convince yourself that foldRight is not stack-safe, and write foldLeft that is"
+
+    @tailrec
+    def foldLeft[A, B](as: List[A], z: B)( f: (A, B) => B): B = {
+      as match {
+        case Nil => z
+        case Cons(h, t) => foldLeft(t, f(h, z))(f)
+      }
     }
 
   }
