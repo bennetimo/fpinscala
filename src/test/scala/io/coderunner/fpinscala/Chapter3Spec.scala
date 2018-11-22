@@ -92,5 +92,14 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p7.foldRight(List(1, 2, 3), Nil:List[Int])( Cons(_, _)) should be(List(1, 2, 3))
   }
 
+  behavior of s"${ex3p9.name}"
+  it should "return length 0 for the empty list" in {
+    ex3p9.length(Nil) should be(0)
+  }
+  it should "return length the appropriate length for a non-empty list" in {
+    forAll(nonEmptyListOf(posNum[Int])){ ints =>
+      ex3p9.length(List(ints :_*)) should be(ints.length)
+    }
+  }
 
 }

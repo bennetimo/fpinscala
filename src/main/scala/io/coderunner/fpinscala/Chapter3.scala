@@ -113,4 +113,14 @@ trait Chapter3 {
      */
   }
 
+  object ex3p9 extends Example {
+
+    val name = "Ex3.9 - Compute the length of a list using foldRight"
+
+    def length[A](as: List[A]): Int = {
+      ex3p7.foldRight(as, 0)((_, count) => count + 1)
+    }
+
+  }
+
 }
