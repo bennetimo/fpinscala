@@ -200,4 +200,13 @@ trait Chapter3 {
     }
   }
 
+  object ex3p14 extends Example {
+
+    val name = "Ex3.14 - Implement append in terms of either foldLeft or foldRight"
+
+    def append[A](as: List[A], append: List[A]): List[A] = {
+      ex3p7.foldRight(as, append)( (a, acc) => Cons(a, acc))
+    }
+  }
+
 }

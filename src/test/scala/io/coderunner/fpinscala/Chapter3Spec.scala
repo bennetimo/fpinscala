@@ -138,4 +138,9 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p13.foldLeftViaFoldRight(List(1, 2, 3), Nil:List[Int])( Cons(_, _)) should be(List(3, 2, 1))
   }
 
+  behavior of s"${ex3p14.name}"
+  it should "append an element to the end of the list" in {
+    ex3p14.append(List(1, 2, 3), List(4)) should be(List(1, 2, 3, 4))
+  }
+
 }
