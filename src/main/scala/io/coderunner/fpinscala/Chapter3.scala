@@ -209,4 +209,18 @@ trait Chapter3 {
     }
   }
 
+  object ex3p15 extends Example {
+
+    val name = "Ex3.15 (Hard) - Write a function that concatenates a list of lists into a single list"
+
+    def concat[A](ls: List[List[A]]): List[A] = ls match {
+      case Nil => Nil
+      case Cons(h, t) => ex3p14.append(h, concat(t))
+    }
+
+    def concatFR[A](ls: List[List[A]]): List[A] = {
+      ex3p7.foldRight(ls, Nil: List[A])(ex3p14.append)
+    }
+  }
+
 }

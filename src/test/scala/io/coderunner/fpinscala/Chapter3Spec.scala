@@ -143,4 +143,12 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p14.append(List(1, 2, 3), List(4)) should be(List(1, 2, 3, 4))
   }
 
+  behavior of s"${ex3p15.name}"
+  it should "concat lists together" in {
+    ex3p15.concat(List(List(1), List(2), List(3))) should be(List(1, 2, 3))
+  }
+  it should "concat lists together when implemented using foldRight" in {
+    ex3p15.concatFR(List(List(1), List(2), List(3))) should be(List(1, 2, 3))
+  }
+
 }
