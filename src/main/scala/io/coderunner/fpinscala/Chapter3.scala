@@ -168,4 +168,36 @@ trait Chapter3 {
     def reverse[A](as: List[A]): List[A] = ex3p10.foldLeft(as, Nil:List[A])( (a, acc) => Cons(a, acc))
   }
 
+  object ex3p13 extends Example {
+
+    val name = "Ex3.13 (Hard) - Can you write foldLeft in terms of foldRight, and vice-versa?"
+
+    //This case is easy, we just reverse the list first, and then foldLeft over it
+    def foldRightViaFL[A, B](as: List[A], z: B)(f: (A, B) => B): B = {
+      val reversed = ex3p12.reverse(as)
+      ex3p10.foldLeft(reversed, z)(f)
+    }
+
+    // This one is tricky. When we foldRight, we recurse all the way down to the far right of the list and then
+    // start winding out. Whereas in a foldLeft, we want to start off with the left hand side and apply the f function
+    // first there.
+    // So in this case, we get all the way to the right and then for the last real element in the list we apply the
+    // function f(h, foldRight(Nil, z)(f))) (from the definition of foldRight).
+    // Our z value here is actually a function, that is a noop and just returns the passed in value.
+    // So when we evaluate foldRight(Nil, z)(f) we get (b: B) => b
+    // So moving one back out the recursion, towards the left, we have:
+    // f(h, (b: B) => b)
+    // Now what does the f function do? Given the current list item, a, and our current accumlated zero item (so far
+    // just our noop function which will return the last element of the list), we return a new function which
+    // composes our old one with a new one, this time applying f to the current element.
+    // Basically we are wrapping up successive functions. The right most function at the end of the list becomes the
+    // outermost layer, and each layer down moves one position to the left. Since we must evaluate the arguments
+    // of a function before the function itself can be evaluated, this results in us evaluating the innermost f(a, b)
+    // first, which will be the one from the furthest *left* of the list (the last we created, moving from right to left).
+    // So when we unwind, we play the function chain from left to right, simulating foldLeft!
+    def foldLeftViaFoldRight[A, B](l: List[A], z: B)(f: (A, B) => B): B = {
+      ex3p7.foldRight(l, (b: B) => b)((a, g) => b => g(f(a, b)))(z)
+    }
+  }
+
 }

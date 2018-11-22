@@ -130,4 +130,12 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p12.reverse(List(1,2,3,4)) should be(List(4,3,2,1))
   }
 
+  behavior of s"${ex3p13.name}"
+  it should "implement foldRight via foldLeft, so that folding a List with the type constructors gives us back the original list" in {
+    ex3p13.foldRightViaFL(List(1, 2, 3), Nil:List[Int])( Cons(_, _)) should be(List(1, 2, 3))
+  }
+  it should "implement foldLeft via foldRight, so that folding a List with the type constructors gives us back a reversed list" in {
+    ex3p13.foldLeftViaFoldRight(List(1, 2, 3), Nil:List[Int])( Cons(_, _)) should be(List(3, 2, 1))
+  }
+
 }
