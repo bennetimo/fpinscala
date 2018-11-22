@@ -200,4 +200,15 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p23.zipWith(List("a", "b", "c"), List(1, 2, 3))((a, b) => a + b) should be(List("a1", "b2", "c3"))
   }
 
+  behavior of s"${ex3p24.name}"
+  it should "find List(2, 3) as a subsequence of List(1, 2, 3, 4)" in {
+    ex3p24.hasSubsequence(List(1, 2, 3, 4), List(2, 3)) should be(true)
+  }
+  it should "find Nil as a subsequence of List(1, 2, 3, 4)" in {
+    ex3p24.hasSubsequence(List(1, 2, 3, 4), Nil) should be(true)
+  }
+  it should "find not find List(2, 4) as a subsequence of List(1, 2, 3, 4)" in {
+    ex3p24.hasSubsequence(List(1, 2, 3, 4), List(2, 4)) should be(false)
+  }
+
 }

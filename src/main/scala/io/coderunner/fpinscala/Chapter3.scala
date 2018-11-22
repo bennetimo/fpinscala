@@ -315,4 +315,22 @@ trait Chapter3 {
     }
   }
 
+  object ex3p24 extends Example {
+
+    val name = "Ex3.24 (Hard) - Implement hasSubsequence for checking whether a List contains another List as a subsequence"
+
+    def hasSubsequence[A](l: List[A], sub: List[A]): Boolean = {
+      @tailrec
+      def loop(suffix: List[A], subToMatch: List[A]): Boolean = (suffix, subToMatch) match {
+        case (Nil, _) => false //An empty list doesn't have any subsequences
+        case (_, Nil) => true //Every list has the empty list as a subsequence
+        case (Cons(h1, t1), Cons(h2, t2)) => {
+          if(h1 != h2) loop(t1, sub) //No match here, so shift the primary list along one and restart the search of the full sub list
+          else loop(t1, t2) //So far so good, the first elems of each match, shift each along one and try again!
+        }
+      }
+      loop(l, sub)
+    }
+  }
+
 }
