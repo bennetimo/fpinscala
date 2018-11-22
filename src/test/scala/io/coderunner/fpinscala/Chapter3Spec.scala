@@ -192,4 +192,12 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p22.combineAdd(List(1, 2, 3), List(4, 5, 6)) should be(List(5, 7, 9))
   }
 
+  behavior of s"${ex3p23.name}"
+  it should "add corresponding items if zipWith (_ + _)" in {
+    ex3p23.zipWith(List(1, 2, 3), List(4, 5, 6))(_ + _) should be(List(5, 7, 9))
+  }
+  it should "concat letters if zipWith (_ + _) for strings" in {
+    ex3p23.zipWith(List("a", "b", "c"), List(1, 2, 3))((a, b) => a + b) should be(List("a1", "b2", "c3"))
+  }
+
 }

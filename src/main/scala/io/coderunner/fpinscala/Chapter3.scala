@@ -298,9 +298,20 @@ trait Chapter3 {
     val name = "Ex3.22 - Write a function that accepts two lists and constructs a new list by adding corresponding elements"
 
     def combineAdd(l1: List[Int], l2: List[Int]): List[Int] = (l1, l2) match {
-      case (Nil, e) => Nil
-      case (e, Nil) => Nil
+      case (Nil, _) => Nil
+      case (_, Nil) => Nil
       case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1 + h2, combineAdd(t1, t2))
+    }
+  }
+
+  object ex3p23 extends Example {
+
+    val name = "Ex3.23 - Generalise the previous function to zipWith, so that it's not specific to integers of addition"
+
+    def zipWith[A, B, C](l1: List[A], l2: List[B])(combine: (A, B) => C): List[C] = (l1, l2) match {
+      case (Nil, _) => Nil
+      case (_, Nil) => Nil
+      case (Cons(h1, t1), Cons(h2, t2)) => Cons(combine(h1, h2), zipWith(t1, t2)(combine))
     }
   }
 
