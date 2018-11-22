@@ -125,4 +125,9 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p11.length(List(1,2,3,4,5)) should be(5)
   }
 
+  behavior of s"${ex3p12.name}"
+  it should "reverse a list" in {
+    ex3p12.reverse(List(1,2,3,4)) should be(List(4,3,2,1))
+  }
+
 }

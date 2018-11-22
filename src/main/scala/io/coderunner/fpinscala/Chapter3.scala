@@ -161,4 +161,11 @@ trait Chapter3 {
     def length(as: List[Int]): Int = ex3p10.foldLeft(as, 0)( (_, count) => count + 1)
   }
 
+  object ex3p12 extends Example {
+
+    val name = "Ex3.12 - Write a function that returns the reverse of a list, using a fold"
+
+    def reverse[A](as: List[A]): List[A] = ex3p10.foldLeft(as, Nil:List[A])( (a, acc) => Cons(a, acc))
+  }
+
 }
