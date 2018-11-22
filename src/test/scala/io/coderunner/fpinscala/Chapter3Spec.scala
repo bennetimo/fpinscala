@@ -238,4 +238,9 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p27.depth(Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(8), Branch(Leaf(4), Leaf(5))))) should be(3)
   }
 
+  behavior of s"${ex3p28.name}"
+  it should "double all values when mapped with (_ * 2)" in {
+    ex3p28.map(Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4))))(_ * 2) should be(Branch(Branch(Leaf(2), Leaf(4)), Branch(Leaf(6), Leaf(8))))
+  }
+
 }

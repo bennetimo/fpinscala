@@ -370,4 +370,14 @@ trait Chapter3 {
     }
   }
 
+  object ex3p28 extends Example {
+
+    val name = "Ex3.28 - Write a function map for a Tree[A], analogous to map for a List"
+
+    def map[A, B](tree: Tree[A])(f: A => B): Tree[B] = tree match {
+      case Leaf(a) => Leaf(f(a))
+      case Branch(left, right) => Branch(map(left)(f), map(right)(f))
+    }
+  }
+
 }
