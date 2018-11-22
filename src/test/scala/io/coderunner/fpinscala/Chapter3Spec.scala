@@ -174,4 +174,12 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p19.filter(List(1, 2, 3, 4, 5))(_ % 2 == 0) should be(List(2, 4))
   }
 
+  behavior of s"${ex3p20.name}"
+  it should "map and then flatten (via foldRight and append)" in {
+    ex3p20.flatMap(List(1, 2, 3))(i => List(i, i)) should be(List(1, 1, 2, 2, 3, 3))
+  }
+  it should "map and then flatten (via concat and map)" in {
+    ex3p20.flatMapViaConcat(List(1, 2, 3))(i => List(i, i)) should be(List(1, 1, 2, 2, 3, 3))
+  }
+
 }

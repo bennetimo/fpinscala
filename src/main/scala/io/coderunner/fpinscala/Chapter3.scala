@@ -271,4 +271,17 @@ trait Chapter3 {
     }
   }
 
+  object ex3p20 extends Example {
+
+    val name = "Ex3.20 - Write a function flatMap that works like map except that the function given will return a list instead of a single result"
+
+    def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] = {
+      ex3p7.foldRight(as, Nil: List[B])( (elem, acc) => ex3p14.append(f(elem), acc))
+    }
+
+    def flatMapViaConcat[A, B](as: List[A])(f: A => List[B]): List[B] = {
+      ex3p15.concat(ex3p18.map(as)(f))
+    }
+  }
+
 }
