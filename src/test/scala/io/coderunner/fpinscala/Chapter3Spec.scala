@@ -114,4 +114,15 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     noException should be thrownBy ex3p10.foldLeft(ourList, "")((x, y) => "X" + x)
   }
 
+  behavior of s"${ex3p11.name}"
+  it should "return the correct sum of a list" in {
+    ex3p11.sum(List(1,2,3,4,5)) should be(15)
+  }
+  it should "return the correct product of a list" in {
+    ex3p11.product(List(1,2,3,4,5)) should be(120)
+  }
+  it should "return the correct length of a list" in {
+    ex3p11.length(List(1,2,3,4,5)) should be(5)
+  }
+
 }

@@ -152,4 +152,13 @@ trait Chapter3 {
 
   }
 
+  object ex3p11 extends Example {
+
+    val name = "Ex3.11 - Write sum, product and a function to compute the length of a list using foldLeft"
+
+    def sum(as: List[Int]): Int = ex3p10.foldLeft(as, 0)(_ + _)
+    def product(as: List[Int]): Int = ex3p10.foldLeft(as, 1)(_ * _ )
+    def length(as: List[Int]): Int = ex3p10.foldLeft(as, 0)( (_, count) => count + 1)
+  }
+
 }
