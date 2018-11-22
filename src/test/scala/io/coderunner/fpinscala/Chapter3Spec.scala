@@ -227,4 +227,15 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p26.maximum(Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(8), Leaf(4)))) should be(8)
   }
 
+  behavior of s"${ex3p27.name}"
+  it should "return 1 for a single leaf tree" in {
+    ex3p27.depth(Leaf(10)) should be(0)
+  }
+  it should "return 1 for a single branch tree" in {
+    ex3p27.depth(Branch(Leaf(1), Leaf(2))) should be(1)
+  }
+  it should "return the depth of a complex tree" in {
+    ex3p27.depth(Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(8), Branch(Leaf(4), Leaf(5))))) should be(3)
+  }
+
 }

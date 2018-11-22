@@ -360,4 +360,14 @@ trait Chapter3 {
     }
   }
 
+  object ex3p27 extends Example {
+
+    val name = "Ex3.27 - Write a function depth that returns the maximum path length from the root of a tree to any leaf"
+
+    def depth(tree: Tree[Int]): Int = tree match {
+      case Leaf(_) => 0
+      case Branch(left, right) => (1 + depth(left)) max (1 + depth(right))
+    }
+  }
+
 }
