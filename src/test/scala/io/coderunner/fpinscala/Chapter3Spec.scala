@@ -156,4 +156,9 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p16.addOne(List(1, 2, 3)) should be(List(2, 3, 4))
   }
 
+  behavior of s"${ex3p17.name}"
+  it should "stringify a list of doubles" in {
+    ex3p17.stringify(List(1.0, 2.0, 3.0)) should be(List("1.0", "2.0", "3.0"))
+  }
+
 }

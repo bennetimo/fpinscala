@@ -232,4 +232,13 @@ trait Chapter3 {
     }
   }
 
+  object ex3p17 extends Example {
+
+    val name = "Ex3.17 - Write a function that turns each value in a List[Double] into a String"
+
+    def stringify(ls: List[Double]): List[String] = {
+      ex3p7.foldRight(ls, Nil: List[String])( (elem, acc) => Cons(elem.toString, acc))
+    }
+  }
+
 }
