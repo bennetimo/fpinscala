@@ -211,4 +211,15 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p24.hasSubsequence(List(1, 2, 3, 4), List(2, 4)) should be(false)
   }
 
+  behavior of s"${ex3p25.name}"
+  it should "return one for a Tree of a single leaf" in {
+    ex3p25.size(Leaf(1)) should be(1)
+  }
+  it should "return three for a Tree of a single branch" in {
+    ex3p25.size(Branch(Leaf(1), Leaf(2))) should be(3)
+  }
+  it should "return the size of a more complex tree" in {
+    ex3p25.size(Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4)))) should be(7)
+  }
+
 }
