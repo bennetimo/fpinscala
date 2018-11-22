@@ -293,4 +293,15 @@ trait Chapter3 {
     }
   }
 
+  object ex3p22 extends Example {
+
+    val name = "Ex3.22 - Write a function that accepts two lists and constructs a new list by adding corresponding elements"
+
+    def combineAdd(l1: List[Int], l2: List[Int]): List[Int] = (l1, l2) match {
+      case (Nil, e) => Nil
+      case (e, Nil) => Nil
+      case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1 + h2, combineAdd(t1, t2))
+    }
+  }
+
 }

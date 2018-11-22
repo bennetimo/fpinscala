@@ -187,4 +187,9 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p21.filterViaFlatMap(List(1, 2, 3, 4, 5))(_ % 2 == 0) should be(List(2, 4))
   }
 
+  behavior of s"${ex3p22.name}"
+  it should "combine and add items at the same index across two lists" in {
+    ex3p22.combineAdd(List(1, 2, 3), List(4, 5, 6)) should be(List(5, 7, 9))
+  }
+
 }
