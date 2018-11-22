@@ -222,4 +222,9 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p25.size(Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4)))) should be(7)
   }
 
+  behavior of s"${ex3p26.name}"
+  it should "return the max value in a tree" in {
+    ex3p26.maximum(Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(8), Leaf(4)))) should be(8)
+  }
+
 }

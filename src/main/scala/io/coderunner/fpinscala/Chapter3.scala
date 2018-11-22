@@ -350,4 +350,14 @@ trait Chapter3 {
     }
   }
 
+  object ex3p26 extends Example {
+
+    val name = "Ex3.26 - Write a function maximum that returns the max element in a Tree[Int]"
+
+    def maximum(tree: Tree[Int]): Int = tree match {
+      case Leaf(a) => a
+      case Branch(left, right) => maximum(left).max(maximum(right))
+    }
+  }
+
 }
