@@ -182,4 +182,9 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p20.flatMapViaConcat(List(1, 2, 3))(i => List(i, i)) should be(List(1, 1, 2, 2, 3, 3))
   }
 
+  behavior of s"${ex3p21.name}"
+  it should "filter all odd numbers from a list (implemented via flatMap)" in {
+    ex3p21.filterViaFlatMap(List(1, 2, 3, 4, 5))(_ % 2 == 0) should be(List(2, 4))
+  }
+
 }

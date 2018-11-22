@@ -284,4 +284,13 @@ trait Chapter3 {
     }
   }
 
+  object ex3p21 extends Example {
+
+    val name = "Ex3.21 - Use flatMap to implement filter"
+
+    def filterViaFlatMap[A](as: List[A])(f: A => Boolean): List[A] = {
+      ex3p20.flatMap(as)( (a) => if(f(a)) List(a) else Nil)
+    }
+  }
+
 }
