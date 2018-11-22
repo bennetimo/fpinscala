@@ -85,4 +85,19 @@ trait Chapter3 {
     }
   }
 
+
+  object ex3p7 extends Example {
+
+    val name = "Ex3.7 - Can product, implemented using foldRight, immediately halt the recursion and return 0.0 if it encounters 0.0?"
+    //No, because foldRight starts at the far right of the list and has to unwind all the recursive calls. The recursive call will
+    //be made first, so that even if there is a 0.0 somewhere in the list it will not be looked at until the list starts to unwind
+
+    def foldRight[A, B](as: List[A], z: B)( f: (A, B) => B): B = {
+      as match {
+        case Nil => z
+        case Cons(h, t) => f(h, foldRight(t, z)(f))
+      }
+    }
+  }
+
 }

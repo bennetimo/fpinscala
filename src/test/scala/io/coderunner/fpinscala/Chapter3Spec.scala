@@ -73,4 +73,19 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p6.init(List(1, 2, 3, 4)) should be(List(1,2,3))
   }
 
+  behavior of s"${ex3p7.name}"
+  it should "not be able to short-circuit when calculating product if 0.0 is found at the end (right)" in {
+    ex3p7.foldRight(List(1, 2, 3, 4, 0), (1, 0))( (x, acc) => (x * acc._1, acc._2 + 1)) should be((0, 5))
+  }
+  it should "not be able to short-circuit when calculating product if 0.0 is found at the start (left)" in {
+    ex3p7.foldRight(List(0, 1, 2, 3, 4), (1, 0))( (x, acc) => (x * acc._1, acc._2 + 1)) should be((0, 5))
+  }
+  it should "work for sum when using foldRight" in {
+    ex3p7.foldRight(List(1, 2, 3, 4), 0)( (x,y) => x+y) should be(10)
+  }
+  it should "work for product when using foldRight" in {
+    ex3p7.foldRight(List(1, 2, 3, 4), 1)( (x,y) => x*y) should be(24)
+  }
+
+
 }
