@@ -380,4 +380,19 @@ trait Chapter3 {
     }
   }
 
+  object ex3p29 extends Example {
+
+    val name = "Ex3.29 - Generalise size, maximum, depth and map via a new function fold"
+
+    def fold[A, B](tree: Tree[A])(f: A => B)(g: (B, B) => B): B = tree match {
+      case Leaf(a) => f(a)
+      case Branch(left, right) => g(fold(left)(f)(g), fold(right)(f)(g))
+    }
+
+    def sizeFold[A](tree: Tree[A]): Int = fold(tree)(_ => 1)((b1, b2) => 1 + b1 + b2)
+    def maximumFold(tree: Tree[Int]): Int = fold(tree)(l => l)((b1, b2) => b1 max b2)
+    def depthFold[A](tree: Tree[A]): Int = fold(tree)(l => 0)((b1, b2) => 1 + (b1 max b2))
+    def mapFold[A, B](tree: Tree[A])(f: A => B): Tree[B] = fold(tree)(l => Leaf(f(l)): Tree[B])( (b1, b2) => Branch(b1, b2))
+  }
+
 }

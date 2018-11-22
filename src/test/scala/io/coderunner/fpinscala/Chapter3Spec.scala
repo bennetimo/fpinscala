@@ -243,4 +243,30 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p28.map(Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4))))(_ * 2) should be(Branch(Branch(Leaf(2), Leaf(4)), Branch(Leaf(6), Leaf(8))))
   }
 
+  behavior of s"${ex3p29.name}"
+  it should "return one for a Tree of a single leaf (sizeFold)" in {
+    ex3p29.sizeFold(Leaf(1)) should be(1)
+  }
+  it should "return three for a Tree of a single branch (sizeFold)" in {
+    ex3p29.sizeFold(Branch(Leaf(1), Leaf(2))) should be(3)
+  }
+  it should "return the size of a more complex tree (sizeFold)" in {
+    ex3p29.sizeFold(Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4)))) should be(7)
+  }
+  it should "return the max value in a tree (maximumFold)" in {
+    ex3p29.maximumFold(Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(8), Leaf(4)))) should be(8)
+  }
+  it should "return 1 for a single leaf tree (depthFold)" in {
+    ex3p29.depthFold(Leaf(10)) should be(0)
+  }
+  it should "return 1 for a single branch tree (depthFold)" in {
+    ex3p29.depthFold(Branch(Leaf(1), Leaf(2))) should be(1)
+  }
+  it should "return the depth of a complex tree (depthFold)" in {
+    ex3p29.depthFold(Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(8), Branch(Leaf(4), Leaf(5))))) should be(3)
+  }
+  it should "double all values when mapped with (_ * 2) (mapFold)" in {
+    ex3p29.mapFold(Branch(Branch(Leaf(1), Leaf(2)), Branch(Leaf(3), Leaf(4))))(_ * 2) should be(Branch(Branch(Leaf(2), Leaf(4)), Branch(Leaf(6), Leaf(8))))
+  }
+
 }
