@@ -151,4 +151,9 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p15.concatFR(List(List(1), List(2), List(3))) should be(List(1, 2, 3))
   }
 
+  behavior of s"${ex3p16.name}"
+  it should "add one to each element" in {
+    ex3p16.addOne(List(1, 2, 3)) should be(List(2, 3, 4))
+  }
+
 }

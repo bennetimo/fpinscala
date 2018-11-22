@@ -223,4 +223,13 @@ trait Chapter3 {
     }
   }
 
+  object ex3p16 extends Example {
+
+    val name = "Ex3.16 - Write a function that transforms a list of integers by adding one to each element"
+
+    def addOne(ls: List[Int]): List[Int] = {
+      ex3p7.foldRight(ls, Nil: List[Int])( (elem, acc) => Cons(elem + 1, acc))
+    }
+  }
+
 }
