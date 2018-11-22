@@ -87,5 +87,10 @@ class Chapter3Spec extends UnitTest with Chapter3 {
     ex3p7.foldRight(List(1, 2, 3, 4), 1)( (x,y) => x*y) should be(24)
   }
 
+  behavior of s"${ex3p8.name}"
+  it should "give us back the original list" in {
+    ex3p7.foldRight(List(1, 2, 3), Nil:List[Int])( Cons(_, _)) should be(List(1, 2, 3))
+  }
+
 
 }

@@ -85,7 +85,6 @@ trait Chapter3 {
     }
   }
 
-
   object ex3p7 extends Example {
 
     val name = "Ex3.7 - Can product, implemented using foldRight, immediately halt the recursion and return 0.0 if it encounters 0.0?"
@@ -98,6 +97,20 @@ trait Chapter3 {
         case Cons(h, t) => f(h, foldRight(t, z)(f))
       }
     }
+  }
+
+  object ex3p8 extends Example {
+
+    val name = "Ex3.8 - What happens when you pass Nil and Cons themselves to foldRight?"
+
+    /*
+    The list is passed through once and reconstructed, the output being the exact same list
+    foldRight(List(1, 2, 3), Nil)( Cons(_, _))
+    Cons(1, foldRight(List(2, 3), Nil)( Cons(_, _)))
+    Cons(1, Cons(2, foldRight(List(3), Nil))( Cons(_, _)))
+    Cons(1, Cons(2, Cons(3, foldRight(List(Nil), Nil)))))( Cons(_, _))
+    Cons(1, Cons(2, Cons(3, Nil)))( Cons(_, _))
+     */
   }
 
 }
