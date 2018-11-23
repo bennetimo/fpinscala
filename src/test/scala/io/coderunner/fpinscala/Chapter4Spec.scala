@@ -72,4 +72,33 @@ class Chapter4Spec extends UnitTest with Chapter4 {
     ex4p5.sequenceViaTraverse(List(Some(1), Some(2), Some(3))) should be(Some(List(1, 2, 3)))
   }
 
+  behavior of s"${ex4p6.name}"
+  it should "return a Left when mapping a Left value (map)" in {
+    (Left("error"):Either[String, Int]).map(_ + 1) should be(Left("error"))
+  }
+  it should "return a Right with the fn applied when mapping a Right value (map)" in {
+    (Right(10):Either[String, Int]).map(_ + 1) should be(Right(11))
+  }
+  it should "return a Left when flatMapping a Left value (flatMap)" in {
+    (Left("error"):Either[String, Int]).flatMap(a => Right(a + 1)) should be(Left("error"))
+  }
+  it should "return a Right when flatMapping a Right value (flatMap)" in {
+    (Right(10):Either[String, Int]).flatMap(a => Right(a + 1)) should be(Right(11))
+  }
+  it should "return the second Either when the first is a Left (orElse)" in {
+    (Left("error"):Either[String, Int]).orElse(Right(12)) should be(Right(12))
+  }
+  it should "return the second Either (even if it is left) when the first is a Left (orElse)" in {
+    (Left("error"):Either[String, Int]).orElse(Left("also error")) should be(Left("also error"))
+  }
+  it should "apply the function to the values inside each Right (first is left) (map2)" in {
+    (Left("error"):Either[String, Int]).map2(Left("also error"):Either[String, Int])(_ * _) should be(Left("error"))
+  }
+  it should "apply the function to the values inside each Right (second is left) (map2)" in {
+    (Right(12):Either[String, Int]).map2(Left("also error"):Either[String, Int])(_ * _) should be(Left("also error"))
+  }
+  it should "apply the function to the values inside each Right (both right) (map2)" in {
+    (Right(12):Either[String, Int]).map2(Right(2):Either[String, Int])(_ * _) should be(Right(24))
+  }
+
 }

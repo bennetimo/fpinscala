@@ -83,7 +83,7 @@ trait Chapter4 {
 
   object ex4p5 extends Example {
 
-    val name = "Ex4.5 - Write the function traverse to map over a list using a function f that might fail, returning None if applying f ever returns None "
+    val name = "Ex4.5 - Write the function traverse to map over a list using a function f that might fail, returning None if applying f ever returns None"
 
     // This is basically the equivalent of first mapping each element of the list to get a List[Option[B]], and then sequencing it.
     // But we want something more efficient, that doesn't traverse the list completely twice.
@@ -102,6 +102,35 @@ trait Chapter4 {
     def sequenceViaTraverse[A](opts: List[Option[A]]): Option[List[A]] = {
       traverse(opts)(a => a)
     }
+  }
+
+  sealed trait Either[+E, +A] {
+    def map[B](f: A => B): Either[E, B] = this match {
+      case Left(e) => Left(e)
+      case Right(a) => Right(f(a))
+    }
+    // When mapping over the right side, we must promote the left type paramater to some supertype, to satisfy the +E variance annotation
+    def flatMap[EE >: E, B](f: A => Either[EE, B]): Either[EE, B] = this match {
+      case Left(e) => Left(e)
+      case Right(a) => f(a)
+    }
+    def orElse[EE >: E, B >: A](b: => Either[EE, B]): Either[EE, B] = this match {
+      case Left(_) => b
+      case Right(_) => this
+    }
+    def map2[EE >: E, B, C](b: Either[EE, B])(f: (A, B) => C): Either[EE, C] = {
+      for {
+        rightA <- this
+        rightB <- b
+      } yield f(rightA, rightB)
+    }
+  }
+  case class Left[E](value: E) extends Either[E, Nothing]
+  case class Right[A](value: A) extends Either[Nothing, A]
+
+  object ex4p6 extends Example {
+
+    val name = "Ex4.6 - Implement versions of map, flatMap, orElse, and map2 on Either that operate on the Right value"
   }
 
 }
