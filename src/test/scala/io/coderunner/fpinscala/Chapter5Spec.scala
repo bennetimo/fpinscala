@@ -37,4 +37,9 @@ class Chapter5Spec extends UnitTest with Chapter5 {
     Stream(2, 4, 5).forAllViaFR(_ >= 2) should be(true)
   }
 
+  behavior of s"${ex5p5.name}"
+  it should "return all the starting values matching the predicate" in {
+    Stream(1, 5, 2).takeWhileViaFR(_ % 2 != 0).toList should be(List(1, 5))
+  }
+
 }
