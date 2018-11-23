@@ -56,6 +56,14 @@ trait Chapter5 {
     def takeWhileViaFR(p: A => Boolean): Stream[A] = foldRight(Stream.empty[A])((elem, acc) => if(p(elem)) Stream.cons(elem, acc) else Stream.empty)
 
     def headOption: Option[A] = foldRight(None:Option[A])((elem, _) => Some(elem))
+
+    def map[B](f: A => B): Stream[B] = foldRight(Stream.empty[B])( (elem, acc) => Stream.cons(f(elem), acc))
+
+    def filter(f: A => Boolean): Stream[A] = foldRight(Stream.empty[A])( (elem, acc) => if(f(elem)) Stream.cons(elem, acc) else acc)
+
+    def append[B >: A](s: => Stream[B]): Stream[B] = foldRight(s)( (a, b) => Stream.cons(a, b))
+
+    def flatMap[B](f: A => Stream[B]): Stream[B] = foldRight(Stream.empty[B])( (a, b) => f(a).append(b))
   }
 
   case object Empty extends Stream[Nothing]
@@ -102,6 +110,11 @@ trait Chapter5 {
   object ex5p6 extends Example {
 
     val name = "Ex5.6 (Hard) - Implement headOption via foldRight"
+  }
+
+  object ex5p7 extends Example {
+
+    val name = "Ex5.7 - Implement map, filter, append and flatMap using foldRight"
   }
 
 }

@@ -50,4 +50,18 @@ class Chapter5Spec extends UnitTest with Chapter5 {
     Stream(1, 2).headOption should be(Some(1))
   }
 
+  behavior of s"${ex5p7.name}"
+  it should "apply f to all the items in the Stream (map)" in {
+    Stream(1, 2, 3).map(_ * 2).toList should be(List(2, 4, 6))
+  }
+  it should "filter out items not matching the predicate (filter)" in {
+    Stream(1, 2, 3, 4, 5).filter(_ % 2 == 0).toList should be(List(2, 4))
+  }
+  it should "add a new item to the end of the stream (append)" in {
+    Stream(1, 2, 3).append(Stream(4)).toList should be(List(1, 2, 3, 4))
+  }
+  it should "apply f to all items and flatten (flatMap)" in {
+    Stream(1, 2, 3).flatMap(a => Stream.cons(a * 2, Empty)).toList should be(List(2, 4, 6))
+  }
+
 }
