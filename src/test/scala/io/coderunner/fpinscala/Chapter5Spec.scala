@@ -64,4 +64,9 @@ class Chapter5Spec extends UnitTest with Chapter5 {
     Stream(1, 2, 3).flatMap(a => Stream.cons(a * 2, Empty)).toList should be(List(2, 4, 6))
   }
 
+  behavior of s"${ex5p8.name}"
+  it should "generate an infinite stream of constant values" in {
+    ex5p8.constant(2).take(3).toList should be(List(2, 2, 2))
+  }
+
 }

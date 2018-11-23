@@ -117,4 +117,11 @@ trait Chapter5 {
     val name = "Ex5.7 - Implement map, filter, append and flatMap using foldRight"
   }
 
+  object ex5p8 extends Example {
+
+    val name = "Ex5.8 - Generalize ones slightly to the function constant, which returns an infinite Stream of a given value"
+
+    def constant[A](value: A): Stream[A] = Stream.cons(value, constant(value))
+  }
+
 }
