@@ -69,4 +69,9 @@ class Chapter5Spec extends UnitTest with Chapter5 {
     ex5p8.constant(2).take(3).toList should be(List(2, 2, 2))
   }
 
+  behavior of s"${ex5p9.name}"
+  it should "generate an infinite stream of increasing ints" in {
+    ex5p9.from(5).take(4).toList should be(List(5, 6, 7, 8))
+  }
+
 }

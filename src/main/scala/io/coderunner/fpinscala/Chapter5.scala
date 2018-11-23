@@ -124,4 +124,11 @@ trait Chapter5 {
     def constant[A](value: A): Stream[A] = Stream.cons(value, constant(value))
   }
 
+  object ex5p9 extends Example {
+
+    val name = "Ex5.9 - Write a function that generates an infinite stream of integers, n, n+1, n+2 etc"
+
+    def from(n: Int): Stream[Int] = Stream.cons(n, from(n + 1))
+  }
+
 }
