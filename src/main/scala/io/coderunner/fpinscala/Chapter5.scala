@@ -27,8 +27,15 @@ trait Chapter5 {
 
     @tailrec
     final def drop(n: Int): Stream[A] = this match {
-      case Cons(_, t) => t().drop(n-1)
+      case Cons(_, t) if n > 0 => t().drop(n-1)
       case _ => this
+    }
+
+    def takeWhile(p: A => Boolean): Stream[A] = this match {
+      case Empty => Empty
+      case Cons(h, t) =>
+        if(p(h())) Stream.cons(h(), t().takeWhile(p))
+        else Empty
     }
   }
 
@@ -51,13 +58,16 @@ trait Chapter5 {
   object ex5p1 extends Example {
 
     val name = "Ex5.1 - Write a function to convert a Stream to a List"
-
   }
 
   object ex5p2 extends Example {
 
     val name = "Ex5.2 - Write the functions take(n) and drop(n) for a Stream"
+  }
 
+  object ex5p3 extends Example {
+
+    val name = "Ex5.3 - Write the function takeWhile for returning all starting elements of a Stream that match the given predicate"
   }
 
 }
