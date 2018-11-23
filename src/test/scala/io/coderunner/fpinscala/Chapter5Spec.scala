@@ -42,4 +42,12 @@ class Chapter5Spec extends UnitTest with Chapter5 {
     Stream(1, 5, 2).takeWhileViaFR(_ % 2 != 0).toList should be(List(1, 5))
   }
 
+  behavior of s"${ex5p6.name}"
+  it should "return None for an empty stream" in {
+    Stream().headOption should be(None)
+  }
+  it should "return Some(head) for a non-empty stream" in {
+    Stream(1, 2).headOption should be(Some(1))
+  }
+
 }

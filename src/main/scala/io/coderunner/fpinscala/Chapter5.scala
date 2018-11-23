@@ -54,6 +54,8 @@ trait Chapter5 {
     def forAllViaFR(p: A => Boolean): Boolean = foldRight(true)((a, b) => p(a) && b)
 
     def takeWhileViaFR(p: A => Boolean): Stream[A] = foldRight(Stream.empty[A])((elem, acc) => if(p(elem)) Stream.cons(elem, acc) else Stream.empty)
+
+    def headOption: Option[A] = foldRight(None:Option[A])((elem, _) => Some(elem))
   }
 
   case object Empty extends Stream[Nothing]
@@ -95,6 +97,11 @@ trait Chapter5 {
   object ex5p5 extends Example {
 
     val name = "Ex5.5 - Use foldRight to implement takeWhile"
+  }
+
+  object ex5p6 extends Example {
+
+    val name = "Ex5.6 (Hard) - Implement headOption via foldRight"
   }
 
 }
