@@ -79,4 +79,9 @@ class Chapter5Spec extends UnitTest with Chapter5 {
     ex5p10.fibs.take(8).toList should be(List(0,1,1,2,3,5,8,13))
   }
 
+  behavior of s"${ex5p11.name}"
+  it should "generate an infinite stream of fibonacci numbers" in {
+    ex5p11.unfold(3)(i => Some(i, i+1)).take(3).toList should be(List(3, 4, 5))
+  }
+
 }
