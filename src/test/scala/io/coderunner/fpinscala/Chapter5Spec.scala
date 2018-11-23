@@ -84,4 +84,18 @@ class Chapter5Spec extends UnitTest with Chapter5 {
     ex5p11.unfold(3)(i => Some(i, i+1)).take(3).toList should be(List(3, 4, 5))
   }
 
+  behavior of s"${ex5p12.name}"
+  it should "generate an infinite stream of fibonacci numbers (via unfold)" in {
+    ex5p12.fibs.take(8).toList should be(List(0,1,1,2,3,5,8,13))
+  }
+  it should "generate an infinite stream of increasing ints (via unfold)" in {
+    ex5p12.from(5).take(4).toList should be(List(5, 6, 7, 8))
+  }
+  it should "generate an infinite stream of constant values (via unfold)" in {
+    ex5p12.constant(2).take(3).toList should be(List(2, 2, 2))
+  }
+  it should "generate an infinite stream of 1s (via unfold)" in {
+    ex5p12.ones.take(3).toList should be(List(1, 1, 1))
+  }
+
 }

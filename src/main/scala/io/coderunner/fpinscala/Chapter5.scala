@@ -144,14 +144,24 @@ trait Chapter5 {
   object ex5p11 extends Example {
 
     val name = "Ex5.11 - Write a more general stream-building function called unfold"
-    
+
     //Takes an initial state, and a function for producing both the next state and the next value in the
     //generated stream
     def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = f(z) match {
       case Some((a, s)) => Stream.cons(a, unfold(s)(f))
       case None => Stream.empty[A]
     }
+  }
 
+  object ex5p12 extends Example {
+    import ex5p11.unfold
+
+    val name = "Ex5.12 - Write fibs, from, constant and ones in term of unfold"
+
+    def fibs: Stream[Int] = unfold((0, 1)){ case (prev, next) => Some((prev -> (next, prev+next))) }
+    def from(n: Int): Stream[Int] = unfold(n)( s => Some(s, s+1))
+    def constant[A](value: A): Stream[A] = unfold(value)( s => Some(s, s))
+    def ones: Stream[Int] = constant(1)
   }
 
 }
