@@ -44,4 +44,9 @@ class Chapter4Spec extends UnitTest with Chapter4 {
     ex4p2.variance(List(1,3,2,5)) should be(Some(2.1875))
   }
 
+  behavior of s"${ex4p3.name}"
+  it should "combine two option values with +" in {
+    ex4p3.map2(Some(5), Some(2))(_ + _) should be(Some(7))
+  }
+
 }

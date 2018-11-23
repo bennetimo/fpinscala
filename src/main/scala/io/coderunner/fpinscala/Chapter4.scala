@@ -47,4 +47,20 @@ trait Chapter4 {
     }
   }
 
+  object ex4p3 extends Example {
+
+    val name = "Ex4.3 - Write a generic function map2 that combines two Option values using a binary function"
+
+    // Lift takes a function that works on standard A => B and 'lifts' it into the context of Option, so it now works
+    // from Option[A] => Option[B]
+    def lift[A, B](f: A => B): Option[A] => Option[B] = (a) => a map f
+
+    def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = {
+      for {
+        a <- a
+        b <- b
+      } yield f(a, b)
+    }
+  }
+
 }
