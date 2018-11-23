@@ -1,5 +1,7 @@
 package io.coderunner.fpinscala
 
+import scala.annotation.tailrec
+
 trait Chapter4 {
 
   sealed trait Option[+A]{
@@ -61,6 +63,23 @@ trait Chapter4 {
         b <- b
       } yield f(a, b)
     }
+  }
+
+  object ex4p4 extends Example {
+
+    val name = "Ex4.4 - Write a function sequence that combines a list of Options into one Option containing a list of all the Some values in the original List"
+
+    // If any option in the list is None, we return None. Otherwise we return a List of all the Some's.
+    def sequence[A](opts: List[Option[A]]): Option[List[A]] = {
+      @tailrec
+      def loop(o: List[Option[A]], res: List[A]): Option[List[A]] = o match {
+        case Nil => Some(res.reverse)
+        case Some(x) :: t => loop(t, x :: res)
+        case _ => None
+      }
+      loop(opts, Nil)
+    }
+    
   }
 
 }

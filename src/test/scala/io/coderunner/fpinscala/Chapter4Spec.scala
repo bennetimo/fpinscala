@@ -49,4 +49,12 @@ class Chapter4Spec extends UnitTest with Chapter4 {
     ex4p3.map2(Some(5), Some(2))(_ + _) should be(Some(7))
   }
 
+  behavior of s"${ex4p4.name}"
+  it should "return None if any of the options are None" in {
+    ex4p4.sequence(List(Some(1), None, Some(3))) should be(None)
+  }
+  it should "return Some if all the options are Some" in {
+    ex4p4.sequence(List(Some(1), Some(2), Some(3))) should be(Some(List(1, 2, 3)))
+  }
+
 }
