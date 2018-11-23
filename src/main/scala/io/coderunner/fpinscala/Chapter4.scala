@@ -33,4 +33,18 @@ trait Chapter4 {
 
   }
 
+  object ex4p2 extends Example {
+
+    val name = "Ex4.2 - Implement the variance function in terms of flatMap"
+
+    def mean(xs: Seq[Double]): Option[Double] =
+      if(xs.isEmpty) None
+      else Some(xs.sum / xs.length)
+
+    // The variance is the mean of math.pow(x - m, 2) for each element of the sequence where m is the mean
+    def variance(xs: Seq[Double]): Option[Double] = {
+      mean(xs).flatMap(m => mean(xs.map(x => Math.pow(x - m, 2))))
+    }
+  }
+
 }

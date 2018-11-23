@@ -39,4 +39,9 @@ class Chapter4Spec extends UnitTest with Chapter4 {
     Some(52).filter(_>= 42) should be(Some(52))
   }
 
+  behavior of s"${ex4p2.name}"
+  it should "return the variance of a Seq" in {
+    ex4p2.variance(List(1,3,2,5)) should be(Some(2.1875))
+  }
+
 }
