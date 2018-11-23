@@ -64,6 +64,35 @@ trait Chapter5 {
     def append[B >: A](s: => Stream[B]): Stream[B] = foldRight(s)( (a, b) => Stream.cons(a, b))
 
     def flatMap[B](f: A => Stream[B]): Stream[B] = foldRight(Stream.empty[B])( (a, b) => f(a).append(b))
+
+    import ex5p11.unfold
+    def mapViaUnfold[B](f: A => B): Stream[B] = unfold(this)( s => s match {
+      case Empty => None
+      case Cons(h, t) => Some( f(h()) -> t() )
+    })
+
+    def takeViaUnfold(n: Int): Stream[A] = unfold(this)( s => s match {
+      case Cons(h, t) if n > 0 => Some( h() -> t().takeViaUnfold(n - 1) )
+      case _ => None
+    })
+
+    def takeWhileViaUnfold(p: A => Boolean): Stream[A] = unfold(this)( s => s match {
+      case Cons(h, t) if p(h()) => Some( h() -> t() )
+      case _ => None
+    })
+
+    def zipWith[B, C](s2: Stream[B])(combine: (A, B) => C): Stream[C] = unfold(this -> s2)(s => s match {
+      case (Cons(h1, t1), Cons(h2, t2)) => Some( combine(h1(), h2()) -> (t1(), t2()) )
+      case (Empty, _) => None
+      case (_, Empty) => None
+    })
+
+    def zipAll[B](s2: Stream[B]): Stream[( Option[A], Option[B])] = unfold(this -> s2)(s => s match {
+      case (Cons(h1, t1), Cons(h2, t2)) => Some( (Some(h1()), Some(h2())) -> (t1(), t2()) )
+      case (Empty, Cons(h2, t2)) => Some( (None, Some(h2())) -> (Empty, t2()) )
+      case (Cons(h1, t1), Empty) => Some( (Some(h1()), None) -> (t1(), Empty) )
+      case _ => None
+    })
   }
 
   case object Empty extends Stream[Nothing]
@@ -162,6 +191,11 @@ trait Chapter5 {
     def from(n: Int): Stream[Int] = unfold(n)( s => Some(s, s+1))
     def constant[A](value: A): Stream[A] = unfold(value)( s => Some(s, s))
     def ones: Stream[Int] = constant(1)
+  }
+
+  object ex5p13 extends Example {
+
+    val name = "Ex5.13 - Use unfold to implement map, take, takeWhile, zipWith and zipAll"
   }
 
 }

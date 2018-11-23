@@ -98,4 +98,21 @@ class Chapter5Spec extends UnitTest with Chapter5 {
     ex5p12.ones.take(3).toList should be(List(1, 1, 1))
   }
 
+  behavior of s"${ex5p13.name}"
+  it should "apply f to all the items in the Stream (mapViaUnfold)" in {
+    Stream(1, 2, 3).mapViaUnfold(_ * 2).toList should be(List(2, 4, 6))
+  }
+  it should "return the first values of a Stream (takeViaUnfold)" in {
+    Stream(1, 2, 3, 4).takeViaUnfold(2).toList should be(List(1, 2))
+  }
+  it should "return all the starting values matching the predicate (takeWhileViaUnfold)" in {
+    Stream(1, 5, 2).takeWhileViaUnfold(_ % 2 != 0).toList should be(List(1, 5))
+  }
+  it should "combine the elements of the two streams one by one" in {
+    Stream(1, 2, 3).zipWith(Stream("a", "b", "c"))( (a, b) => s"$a$b").toList should be(List("1a", "2b", "3c"))
+  }
+  it should "combine the elements of the two streams one by one as long as either stream has more elements" in {
+    Stream(1, 2, 3).zipAll(Stream("a")).toList should be(List(Some(1) -> Some("a"), Some(2) -> None, Some(3) -> None))
+  }
+
 }
