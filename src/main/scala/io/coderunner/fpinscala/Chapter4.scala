@@ -153,4 +153,15 @@ trait Chapter4 {
     def sequence[E, A](es: List[Either[E, A]]): Either[E, List[A]] = traverse(es)(e => e)
   }
 
+  object ex4p8 extends Example {
+
+    val name = "Ex4.8 - What would you change to be able to collect multiple errors, not just one?"
+
+    // You'd need to change the type of the left (error) from E to a List[E].
+    // Wouldn't change mkPerson because it shouldn't have to care about how errors are handled, just does its localised piece
+    // Instead, we would create a new data type that accumulates errors on the left
+    // flatMap won't work to accumulate failures with a Monad. Why? Because the function is only executed in the success case,
+    // so there is no way to proceed as soon as a single failure occurs
+  }
+
 }

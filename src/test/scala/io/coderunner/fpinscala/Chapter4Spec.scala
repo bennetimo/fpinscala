@@ -119,4 +119,6 @@ class Chapter4Spec extends UnitTest with Chapter4 {
     ex4p7.traverse(List(1,4,2))(dummyFnTraverse) should be(Right(List(2,8,4)))
   }
 
+  behavior of s"${ex4p8.name}"
+
 }
