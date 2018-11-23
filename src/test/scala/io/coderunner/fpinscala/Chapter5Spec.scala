@@ -10,4 +10,12 @@ class Chapter5Spec extends UnitTest with Chapter5 {
     Stream(1, 2, 3, 4).toListTR should be(List(1, 2, 3, 4))
   }
 
+  behavior of s"${ex5p2.name}"
+  it should "return the first values of a Stream (take)" in {
+    Stream(1, 2, 3, 4).take(2).toList should be(Stream(1, 2).toList)
+  }
+  it should "return a new Stream without the first values (drop)" in {
+    Stream(1, 2, 3, 4).drop(2).toList should be(Stream(3, 4).toList)
+  }
+
 }

@@ -18,6 +18,18 @@ trait Chapter5 {
       }
       loop(Nil, this).reverse
     }
+
+    def take(n: Int): Stream[A] = this match {
+      case Cons(h, t) if n > 1 => Stream.cons(h(), t().take(n - 1))
+      case Cons(h, t) if n == 1 => Stream.cons(h(), Empty)
+      case _ => Empty
+    }
+
+    @tailrec
+    final def drop(n: Int): Stream[A] = this match {
+      case Cons(_, t) => t().drop(n-1)
+      case _ => this
+    }
   }
 
   case object Empty extends Stream[Nothing]
@@ -39,6 +51,12 @@ trait Chapter5 {
   object ex5p1 extends Example {
 
     val name = "Ex5.1 - Write a function to convert a Stream to a List"
+
+  }
+
+  object ex5p2 extends Example {
+
+    val name = "Ex5.2 - Write the functions take(n) and drop(n) for a Stream"
 
   }
 
