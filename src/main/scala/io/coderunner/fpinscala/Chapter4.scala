@@ -133,4 +133,24 @@ trait Chapter4 {
     val name = "Ex4.6 - Implement versions of map, flatMap, orElse, and map2 on Either that operate on the Right value"
   }
 
+  object ex4p7 extends Example {
+
+    val name = "Ex4.7 - Implement sequence and traverse for Either. They should return the first error encountered if there is one"
+
+    // Traverse passes through the list applying a function to each item, returning the whole list if there is no failures
+    def traverse[E, A, B](as: List[A])(f: A => Either[E, B]): Either[E, List[B]] = as match {
+      case Nil => Right(Nil)
+      case h :: t => {
+        val head = f(h).map(b => List(b))
+        val tail = traverse(t)(f)
+
+        (head map2 tail)(_ ++ _)
+      }
+    }
+
+    // Sequence is similar to traverse, but it doesn't care about applying the function. It just wants to check the list as it
+    // stands already for any failures
+    def sequence[E, A](es: List[Either[E, A]]): Either[E, List[A]] = traverse(es)(e => e)
+  }
+
 }

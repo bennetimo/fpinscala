@@ -101,4 +101,22 @@ class Chapter4Spec extends UnitTest with Chapter4 {
     (Right(12):Either[String, Int]).map2(Right(2):Either[String, Int])(_ * _) should be(Right(24))
   }
 
+  behavior of s"${ex4p7.name}"
+  it should "return the first Left if any of the list is Left (sequence)" in {
+    ex4p7.sequence(List(Right(4), Right(6), Left("error"), Right(2))) should be(Left("error"))
+  }
+  it should "return the first Left if any of the list is Left (multiple lefts) (sequence)" in {
+    ex4p7.sequence(List(Right(4), Right(6), Left("error"), Left("error2"), Right(2))) should be(Left("error"))
+  }
+  it should "return a Right with all the values as a list if all are Right (sequence)" in {
+    ex4p7.sequence(List(Right(4), Right(6), Right(2))) should be(Right(List(4, 6, 2)))
+  }
+  def dummyFnTraverse(i: Int): Either[String, Int] = if(i < 10) Right(i * 2) else Left("nope!")
+  it should "return the first Left if any of the list when the function is applied is Left (traverse)" in {
+    ex4p7.traverse(List(1,4,12,2))(dummyFnTraverse) should be(Left("nope!"))
+  }
+  it should "return the list with all functions applied in a Right (traverse)" in {
+    ex4p7.traverse(List(1,4,2))(dummyFnTraverse) should be(Right(List(2,8,4)))
+  }
+
 }
