@@ -23,4 +23,18 @@ class Chapter5Spec extends UnitTest with Chapter5 {
     Stream(1, 5, 2).takeWhile(_ % 2 != 0).toList should be(List(1, 5))
   }
 
+  behavior of s"${ex5p4.name}"
+  it should "return false if one value in the stream doesn't satisfy the predicate" in {
+    Stream(2, 4, 5).forAll(_ % 2 == 0) should be(false)
+  }
+  it should "return true if all values in the stream satisfy the predicate" in {
+    Stream(2, 4, 5).forAll(_ >= 2) should be(true)
+  }
+  it should "return false if one value in the stream doesn't satisfy the predicate (via foldRight)" in {
+    Stream(2, 4, 5).forAllViaFR(_ % 2 == 0) should be(false)
+  }
+  it should "return true if all values in the stream satisfy the predicate (via foldRight)" in {
+    Stream(2, 4, 5).forAllViaFR(_ >= 2) should be(true)
+  }
+
 }

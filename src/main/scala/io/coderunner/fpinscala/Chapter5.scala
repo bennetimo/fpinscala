@@ -37,6 +37,21 @@ trait Chapter5 {
         if(p(h())) Stream.cons(h(), t().takeWhile(p))
         else Empty
     }
+
+    // Taken from book
+    def foldRight[B](z: => B)(f: (A, => B) => B): B = this match {// The arrow `=>` in front of the argument type `B` means that the function `f` takes its second argument by name and may choose not to evaluate it.
+      case Cons(h,t) => f(h(), t().foldRight(z)(f)) // If `f` doesn't evaluate its second argument, the recursion never occurs.
+      case _ => z
+    }
+
+    def forAll(p: A => Boolean): Boolean = this match {
+      case Empty => true
+      case Cons(h, t) =>
+        if(p(h())) t().forAll(p)
+        else false
+    }
+
+    def forAllViaFR(p: A => Boolean): Boolean = foldRight(true)((a, b) => p(a) && b)
   }
 
   case object Empty extends Stream[Nothing]
@@ -68,6 +83,11 @@ trait Chapter5 {
   object ex5p3 extends Example {
 
     val name = "Ex5.3 - Write the function takeWhile for returning all starting elements of a Stream that match the given predicate"
+  }
+
+  object ex5p4 extends Example {
+
+    val name = "Ex5.4 - Implement forAll which checks that all elements in the Stream match a given predicate"
   }
 
 }
