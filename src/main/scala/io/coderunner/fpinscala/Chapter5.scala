@@ -131,4 +131,14 @@ trait Chapter5 {
     def from(n: Int): Stream[Int] = Stream.cons(n, from(n + 1))
   }
 
+  object ex5p10 extends Example {
+
+    val name = "Ex5.10 - Write a function fibs that generates the infinite stream of Fibonacci numbers"
+
+    def fibs: Stream[Int] = {
+      def loop(prev: Int, next: Int): Stream[Int] = Stream.cons(prev, loop(next, prev+next))
+      loop(0, 1)
+    }
+  }
+
 }
