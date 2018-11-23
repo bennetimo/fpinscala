@@ -57,4 +57,19 @@ class Chapter4Spec extends UnitTest with Chapter4 {
     ex4p4.sequence(List(Some(1), Some(2), Some(3))) should be(Some(List(1, 2, 3)))
   }
 
+  behavior of s"${ex4p5.name}"
+  def dummyFn(i: Int): Option[String] = if(i < 10) Some(i.toString) else None
+  it should "return None if the fn ever results in a None" in {
+    ex4p5.traverse(List(1,2,12,3))(dummyFn) should be(None)
+  }
+  it should "return Some if the fn always gives a Some" in {
+    ex4p5.traverse(List(1,2,3,4))(dummyFn) should be(Some(List("1","2","3","4")))
+  }
+  it should "return None if any of the options are None (sequenceViaTraverse)" in {
+    ex4p5.sequenceViaTraverse(List(Some(1), None, Some(3))) should be(None)
+  }
+  it should "return Some if all the options are Some (sequenceViaTraverse)" in {
+    ex4p5.sequenceViaTraverse(List(Some(1), Some(2), Some(3))) should be(Some(List(1, 2, 3)))
+  }
+
 }

@@ -79,7 +79,29 @@ trait Chapter4 {
       }
       loop(opts, Nil)
     }
-    
+  }
+
+  object ex4p5 extends Example {
+
+    val name = "Ex4.5 - Write the function traverse to map over a list using a function f that might fail, returning None if applying f ever returns None "
+
+    // This is basically the equivalent of first mapping each element of the list to get a List[Option[B]], and then sequencing it.
+    // But we want something more efficient, that doesn't traverse the list completely twice.
+    def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = a match {
+      case Nil => Some(Nil)
+      case h :: t => {
+        //Apply the function to the head which gives us back an option. Then concatenate the head value
+        //with the result traversing the result of the rest of the list, flatMapping it to give us just one layer of Option
+        f(h).flatMap(b => ex4p3.map2(Some(b), traverse(t)(f))(_ :: _))
+
+        //The solutions use a slightly simpler:
+        // ex4p3.map2(f(h), traverse(t)(f))(_ :: _)
+      }
+    }
+
+    def sequenceViaTraverse[A](opts: List[Option[A]]): Option[List[A]] = {
+      traverse(opts)(a => a)
+    }
   }
 
 }
