@@ -38,5 +38,32 @@ trait Chapter6 {
     }
   }
 
+  object ex6p3 extends Example {
+
+    import ex6p1._
+    import ex6p2._
+
+    val name = "Ex6.3 - Write functions to generate an (Int, Double) pair, a (Double, Int) pair, and a (Double, Double, Double) 3-tuple"
+
+    def intDouble(rng: RNG): ((Int, Double), RNG) = {
+      val (i, r) = rng.nextInt
+      val (i2, r2) = double(r)
+      ((i, i2), r2)
+    }
+
+    def doubleInt(rng: RNG): ((Double, Int), RNG) = {
+      val (d, r) = double(rng)
+      val (i2, r2) = nonNegativeInt(r)
+      ((d, i2), r2)
+    }
+
+    def double3(rng: RNG): ((Double, Double, Double), RNG) = {
+      val (d1, r) = double(rng)
+      val (d2, r2) = double(r)
+      val (d3, r3) = double(r2)
+      ((d1, d2, d3), r3)
+    }
+  }
+
 
 }
