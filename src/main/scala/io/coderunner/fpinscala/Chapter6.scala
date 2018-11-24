@@ -4,6 +4,8 @@ import scala.annotation.tailrec
 
 trait Chapter6 {
 
+  type Rand[+A] = RNG => (A, RNG)
+
   trait RNG {
     def nextInt: (Int, RNG)
   }
@@ -81,6 +83,22 @@ trait Chapter6 {
       }
       loop(count, Nil, rng)
     }
+  }
+
+  object ex6p5 extends Example {
+
+    import ex6p1._
+
+    val name = "Ex6.5 - Use map to implement double in a more elegant way"
+
+    def unit[A](a: A): Rand[A] = rng => (a, rng)
+
+    def map[A, B](s: Rand[A])(f: A => B): Rand[B] = rng => {
+      val (a, rng2) = s(rng)
+      (f(a), rng2)
+    }
+
+    def double: Rand[Double] = map(nonNegativeInt)(i => i / (Int.MaxValue.toDouble + 1))
   }
 
 
