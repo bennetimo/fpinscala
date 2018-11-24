@@ -131,5 +131,23 @@ trait Chapter6 {
       fs.foldRight(unit(List.empty[A]))((f, acc) => map2(f, acc)(_ :: _))
   }
 
+  object ex6p8 extends Example {
+
+    val name = "Ex6.8 - Implement flatMap, and then use it to implement nonNegativeLessThan"
+
+    def flatMap[A, B](f: Rand[A])(g: A => Rand[B]): Rand[B] = rng => {
+      val (a, rng2) = f(rng)
+      g(a)(rng2)
+    }
+
+    import ex6p1._
+    import ex6p5._
+    def nonNegativeLessThan(n: Int): Rand[Int] = flatMap(nonNegativeInt)(i => {
+      val mod = i % n
+      if (i + (n-1) - mod >= 0) unit(mod )else nonNegativeLessThan(n)
+    })
+
+  }
+
 
 }

@@ -70,4 +70,11 @@ class Chapter6Spec extends UnitTest with Chapter6 {
     })
   }
 
+  behavior of s"${ex6p8.name}"
+  it should "generate positive ints less than n" in {
+    forAll((n: Int) => {
+      ex6p8.nonNegativeLessThan(10)(SimpleRNG(n))._1 should be <= 10
+    })
+  }
+
 }
