@@ -101,5 +101,18 @@ trait Chapter6 {
     def double: Rand[Double] = map(nonNegativeInt)(i => i / (Int.MaxValue.toDouble + 1))
   }
 
+  object ex6p6 extends Example {
+
+    import ex6p1._
+
+    val name = "Ex6.6 - Write the implementation of map2 that takes two actions ra and rb, and a function f for combining their results"
+
+    def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = rng => {
+      val (a, rng2) = ra(rng)
+      val (b, rng3) = rb(rng2)
+      (f(a,b), rng3)
+    }
+  }
+
 
 }

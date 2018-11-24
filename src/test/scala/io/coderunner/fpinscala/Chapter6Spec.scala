@@ -53,4 +53,12 @@ class Chapter6Spec extends UnitTest with Chapter6 {
     })
   }
 
+  behavior of s"${ex6p6.name}"
+  it should "apply the combiner function to the two states" in {
+    forAll((n: Int) => {
+      import ex6p5.double
+      ex6p6.map2(double,double)((a,b) => a + b)(SimpleRNG(n))._1 should (be >= 0.0 and be < 2.0)
+    })
+  }
+
 }
