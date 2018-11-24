@@ -102,6 +102,13 @@ trait Chapter5 {
       case Cons(_, t) => Some( s -> t())
       case _ => None
     }) append Stream(Stream.empty[A])
+
+    def scanRight[B](z: => B)(f: (A, => B) => B): Stream[B] = foldRight((z, Stream(z)))( (a, b) => {
+      // b is passed by-name and used in by-name args in f and cons. So use lazy val to ensure only one evaluation...
+      lazy val b1 = b
+      lazy val newZ = f(a, b1._1)
+      (newZ, Stream.cons(newZ, b1._2))
+    })._2
   }
 
   case object Empty extends Stream[Nothing]
@@ -215,6 +222,11 @@ trait Chapter5 {
   object ex5p15 extends Example {
 
     val name = "Ex5.15 - Implement tails using unfold"
+  }
+
+  object ex5p16 extends Example {
+
+    val name = "Ex5.16 (Hard) - Generalise tails to the function scanRight, which is like a foldRight that returns a stream of the intermediate results"
   }
 
 }

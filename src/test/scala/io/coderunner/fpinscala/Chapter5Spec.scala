@@ -128,4 +128,9 @@ class Chapter5Spec extends UnitTest with Chapter5 {
     Stream(1, 2, 3).tails.map(_.toList).toList should be(List(List(1,2,3), List(2,3), List(3), Nil))
   }
 
+  behavior of s"${ex5p16.name}"
+  it should "return a stream of all the intermediate results" in {
+    Stream(1, 2, 3).scanRight(0)(_ + _).toList should be(List(6, 5, 3, 0))
+  }
+
 }
