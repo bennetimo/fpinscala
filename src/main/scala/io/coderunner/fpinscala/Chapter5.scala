@@ -97,6 +97,11 @@ trait Chapter5 {
     //Zip the two streams together combining each pair of elements into a true (if they're equal), or a false otherwise
     //Then go through the stream checking that every element is true. As soon as a single false is encountered, it terminates to false
     def startsWith[B >: A](s2: Stream[B]): Boolean = zipWith(s2)( (h1, h2) => if(h1 == h2) true else false).forAll(_ == true)
+
+    def tails: Stream[Stream[A]] = unfold(this)( s => s match {
+      case Cons(_, t) => Some( s -> t())
+      case _ => None
+    }) append Stream(Stream.empty[A])
   }
 
   case object Empty extends Stream[Nothing]
@@ -205,6 +210,11 @@ trait Chapter5 {
   object ex5p14 extends Example {
 
     val name = "Ex5.14 (Hard) - Implement startsWith using functions you've written, to check if one Stream is a prefix of another"
+  }
+
+  object ex5p15 extends Example {
+
+    val name = "Ex5.15 - Implement tails using unfold"
   }
 
 }

@@ -123,4 +123,9 @@ class Chapter5Spec extends UnitTest with Chapter5 {
     Stream(1, 2, 3).startsWith(Stream(1, 2)) should be(true)
   }
 
+  behavior of s"${ex5p15.name}"
+  it should "return a stream of all the tails of a stream" in {
+    Stream(1, 2, 3).tails.map(_.toList).toList should be(List(List(1,2,3), List(2,3), List(3), Nil))
+  }
+
 }
