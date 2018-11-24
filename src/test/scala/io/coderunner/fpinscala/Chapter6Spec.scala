@@ -126,4 +126,12 @@ class Chapter6Spec extends UnitTest with Chapter6 {
     })
   }
 
+  behavior of s"${ex6p11.name}"
+  it should "return the number of coins (14) and candies (1 left) after it is simulated" in {
+    val machine = Machine(true, 5, 10)
+    val inputs = List(Coin, Turn, Coin, Coin, Coin, Turn, Turn, Coin, Turn, Coin, Turn)
+
+    Machine.simulateMachine(inputs).run(machine)._1 should be (14, 1)
+  }
+
 }

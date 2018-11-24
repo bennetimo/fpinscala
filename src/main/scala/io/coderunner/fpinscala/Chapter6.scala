@@ -177,6 +177,15 @@ trait Chapter6 {
 
     def sequenceViaFoldRight[S,A](sas: List[State[S, A]]): State[S, List[A]] =
       sas.foldRight(unit[S, List[A]](List.empty))( (f, acc) => f.map2(acc)(_ :: _))
+
+    def modify[S](f: S => S): State[S, Unit] = for {
+      s <- get // Gets the current state and assigns it to `s`.
+      _ <- set(f(s)) // Sets the new state to `f` applied to `s`.
+    } yield ()
+
+    def get[S]: State[S, S] = State(s => (s, s))
+
+    def set[S](s: S): State[S, Unit] = State(_ => ((), s))
   }
 
   object ex6p10 extends Example {
@@ -189,5 +198,40 @@ trait Chapter6 {
     def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = flatMap(ra)( a => map(rb)(b => f(a, b)))
   }
 
+  sealed trait Input
+  case object Coin extends Input
+  case object Turn extends Input
+
+  case class Machine(locked: Boolean, candies: Int, coins: Int)
+
+  // Code below taken from solutions
+  object Machine {
+    //Rules:
+    //1. Inserting a coin into a locked machine will cause it to unlock if there's any candy left
+    //2. Turning the knob on an unlocked machine will cause it to dispense candy and become locked
+    //3. Turning the knob on a locked machine or inserting a coin into an unlocked machine does nothing
+    //4. A machine that's out of candy ignores all inputs
+
+    def simulateMachine(inputs: List[Input]): State[Machine, (Int, Int)] = for {
+      _ <- sequenceViaFoldRight(inputs map (modify[Machine] _ compose update))
+      s <- get
+    } yield (s.coins, s.candies)
+
+    def update: Input => Machine => Machine = (i: Input) => (s: Machine) =>
+      (i, s) match {
+        case (_, Machine(_, 0, _)) => s //Anything on a machine with no candies does nothing
+        case (Coin, Machine(false, _, _)) => s //Inserting a coin into an unlocked machine does nothing
+        case (Turn, Machine(true, _, _)) => s //Turning the knob on a locked machine does nothing
+        case (Coin, Machine(true, candy, coin)) => //Inserting a coin into a locked machine unlocks it and increases the coin count
+          Machine(false, candy, coin + 1)
+        case (Turn, Machine(false, candy, coin)) => //Turn the coin of an unlocked machine gives out a candy
+          Machine(true, candy - 1, coin)
+      }
+  }
+
+  object ex6p11 extends Example {
+
+    val name = "Ex6.11 (Hard) - Implement a series of finite state automaton that models a simple candy dispenser"
+  }
 
 }
