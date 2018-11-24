@@ -77,4 +77,18 @@ class Chapter6Spec extends UnitTest with Chapter6 {
     })
   }
 
+  behavior of s"${ex6p9.name}"
+  it should "map the random number generator (map via flatMap)" in {
+    forAll((n: Int) => {
+      import ex6p5.double
+      ex6p9.map(double)((a) => a * 2)(SimpleRNG(n))._1 should (be >= 0.0 and be < 2.0)
+    })
+  }
+  it should "apply the combiner function to the two states (map2 via flatMap)" in {
+    forAll((n: Int) => {
+      import ex6p5.double
+      ex6p9.map2(double,double)((a,b) => a + b)(SimpleRNG(n))._1 should (be >= 0.0 and be < 2.0)
+    })
+  }
+
 }

@@ -146,7 +146,16 @@ trait Chapter6 {
       val mod = i % n
       if (i + (n-1) - mod >= 0) unit(mod )else nonNegativeLessThan(n)
     })
+  }
 
+  object ex6p9 extends Example {
+
+    val name = "Ex6.9 - Reimplement map and map2 in terms of flatMap"
+
+    import ex6p5._
+    import ex6p8._
+    def map[A, B](s: Rand[A])(f: A => B): Rand[B] = flatMap(s)(a => unit(f(a)))
+    def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = flatMap(ra)( a => map(rb)(b => f(a, b)))
   }
 
 
