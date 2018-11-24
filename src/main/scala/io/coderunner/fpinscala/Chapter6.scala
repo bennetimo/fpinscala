@@ -28,5 +28,15 @@ trait Chapter6 {
     }
   }
 
+  object ex6p2 extends Example {
+
+    val name = "Ex6.2 - Write a function to generate a Double between 0 and 1, not including 1"
+
+    def double(rng: RNG): (Double, RNG) = {
+      val (i, r) = ex6p1.nonNegativeInt(rng)
+      (i / (Int.MaxValue.toDouble + 1), r)
+    }
+  }
+
 
 }
