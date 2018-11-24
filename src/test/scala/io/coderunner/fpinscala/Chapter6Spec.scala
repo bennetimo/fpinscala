@@ -91,4 +91,39 @@ class Chapter6Spec extends UnitTest with Chapter6 {
     })
   }
 
+  behavior of s"${ex6p10.name}"
+  it should "create a state with a value (unit via State)" in {
+    forAll((n: Int) => {
+      State.unit(10).run(SimpleRNG(n))._1 should be(10)
+    })
+  }
+  it should "map the random number generator (map via State)" in {
+    forAll((n: Int) => {
+      val s = State[RNG, Double](s => (1.0, s))
+      s.map(a => a * 2).run(SimpleRNG(n))._1 should (be >= 0.0 and be <= 2.0)
+    })
+  }
+  it should "apply the combiner function to the two states (map2 via State)" in {
+    forAll((n: Int) => {
+      val s = State[RNG, Double](s => (1.0, s))
+      val s2 = State[RNG, Double](s => (2.0, s))
+      s.map2(s2)((a, b) => a + b).run(SimpleRNG(n))._1 should be(3.0)
+    })
+  }
+  it should "map and flatten the random number generator (flatMap via State)" in {
+    forAll((n: Int) => {
+      val s = State[RNG, Double](s => (1.0, s))
+      s.flatMap(a => State.unit(a * 2)).run(SimpleRNG(n))._1 should be(2.0)
+    })
+  }
+  it should "sequence together random generators (sequence via State)" in {
+    forAll((n: Int) => {
+      val s = State[RNG, Double](s => (1.0, s))
+      val s2 = State[RNG, Double](s => (2.0, s))
+      val s3 = State[RNG, Double](s => (3.0, s))
+
+      State.sequenceViaFoldRight(List(s, s2, s3)).run(SimpleRNG(n))._1 should be(List(1.0, 2.0, 3.0))
+    })
+  }
+
 }

@@ -158,5 +158,36 @@ trait Chapter6 {
     def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = flatMap(ra)( a => map(rb)(b => f(a, b)))
   }
 
+  import State._
+  case class State[S, +A](run: S => (A, S)){
+
+    def map[B](f: A => B): State[S, B] = flatMap(a => unit(f(a)))
+
+    def map2[B, C](sb: State[S, B])(f: (A, B) => C): State[S, C] = flatMap( a => sb.map(b => f(a, b)))
+
+    def flatMap[B](f: A => State[S, B]): State[S, B] = State(s => {
+      val (a, s2) = run(s)
+      f(a).run(s2)
+    })
+  }
+
+  object State {
+    def unit[S, A](a: A): State[S, A] = State(s => (a, s))
+    type Randy[A] = State[RNG, A]
+
+    def sequenceViaFoldRight[S,A](sas: List[State[S, A]]): State[S, List[A]] =
+      sas.foldRight(unit[S, List[A]](List.empty))( (f, acc) => f.map2(acc)(_ :: _))
+  }
+
+  object ex6p10 extends Example {
+
+    val name = "Ex6.10 - Generalise the functions unit, map, map2, flatMap and sequence"
+
+    import ex6p5._
+    import ex6p8._
+    def map[A, B](s: Rand[A])(f: A => B): Rand[B] = flatMap(s)(a => unit(f(a)))
+    def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = flatMap(ra)( a => map(rb)(b => f(a, b)))
+  }
+
 
 }
