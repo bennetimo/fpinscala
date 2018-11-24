@@ -38,4 +38,12 @@ class Chapter6Spec extends UnitTest with Chapter6 {
     })
   }
 
+  behavior of s"${ex6p4.name}"
+  it should "generate a list of random numbers" in {
+    forAll((n: Int) => {
+      val ints = ex6p4.ints(5)(SimpleRNG(n))._1
+      ints.toSet.size should be(5)
+    })
+  }
+
 }

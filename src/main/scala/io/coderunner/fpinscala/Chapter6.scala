@@ -65,5 +65,23 @@ trait Chapter6 {
     }
   }
 
+  object ex6p4 extends Example {
+
+    import ex6p1._
+    import ex6p2._
+
+    val name = "Ex6.4 - Write a function to generate a list of random integers"
+
+    def ints(count: Int)(rng: RNG): (List[Int], RNG) = {
+      @tailrec
+      def loop(n: Int, acc: List[Int], rng: RNG): (List[Int], RNG) = {
+        val (i, r) = rng.nextInt
+        if (n <= 0) acc -> rng
+        else loop(n-1, i :: acc, r)
+      }
+      loop(count, Nil, rng)
+    }
+  }
+
 
 }
