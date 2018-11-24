@@ -115,4 +115,12 @@ class Chapter5Spec extends UnitTest with Chapter5 {
     Stream(1, 2, 3).zipAll(Stream("a")).toList should be(List(Some(1) -> Some("a"), Some(2) -> None, Some(3) -> None))
   }
 
+  behavior of s"${ex5p14.name}"
+  it should "return false if one stream is not a prefix of another" in {
+    Stream(1, 2, 3).startsWith(Stream(1, 2, 5)) should be(false)
+  }
+  it should "return true if one stream is a prefix of another" in {
+    Stream(1, 2, 3).startsWith(Stream(1, 2)) should be(true)
+  }
+
 }
