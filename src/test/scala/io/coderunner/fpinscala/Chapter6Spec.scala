@@ -61,4 +61,13 @@ class Chapter6Spec extends UnitTest with Chapter6 {
     })
   }
 
+  behavior of s"${ex6p7.name}"
+  it should "sequence together random generators" in {
+    forAll((n: Int) => {
+      import ex6p5.double
+      val l = List(double, double, double)
+      ex6p7.sequence(l)(SimpleRNG(n))._1.size should be(3)
+    })
+  }
+
 }

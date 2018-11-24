@@ -103,8 +103,6 @@ trait Chapter6 {
 
   object ex6p6 extends Example {
 
-    import ex6p1._
-
     val name = "Ex6.6 - Write the implementation of map2 that takes two actions ra and rb, and a function f for combining their results"
 
     def map2[A, B, C](ra: Rand[A], rb: Rand[B])(f: (A, B) => C): Rand[C] = rng => {
@@ -112,6 +110,25 @@ trait Chapter6 {
       val (b, rng3) = rb(rng2)
       (f(a,b), rng3)
     }
+
+    def both[A, B](ra: Rand[A], rb: Rand[B]): Rand[(A,B)] = map2(ra, rb)((_, _))
+
+    import ex6p2._
+
+    val int: Rand[Int] = _.nextInt
+    val randIntDouble: Rand[(Int, Double)] = both(int, double)
+    val randDoubleInt: Rand[(Double, Int)] = both(double, int)
+  }
+
+  object ex6p7 extends Example {
+
+    val name = "Ex6.7 (Hard) - Implement sequence for combining a List of transitions into a single transition"
+
+    import ex6p5._
+    import ex6p6._
+
+    def sequence[A](fs: List[Rand[A]]): Rand[List[A]] =
+      fs.foldRight(unit(List.empty[A]))((f, acc) => map2(f, acc)(_ :: _))
   }
 
 
